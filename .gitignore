@@ -1,0 +1,6 @@
+node_modules/
+.DS_Store
+server/.env
+server/uploads/
+server/video_tasks.json
+*.log

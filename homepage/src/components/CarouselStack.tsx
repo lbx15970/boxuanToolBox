@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { useNavigate } from "react-router-dom";
 import { items } from "./items";
 import { AnimationSettings } from "./SettingsPanel";
 
@@ -42,6 +43,8 @@ export const CarouselStack: React.FC<CarouselStackProps> = ({ settings }) => {
   const [[page, direction], setPage] = useState([0, 0]);
   const [indices, setIndices] = useState([0, 1, 2, 3]);
   const [dragElastic, setDragElastic] = useState(0.7); // Default to desktop
+  const [dragOffsetX, setDragOffsetX] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setDragElastic(settings.dragElastic);
@@ -73,6 +76,9 @@ export const CarouselStack: React.FC<CarouselStackProps> = ({ settings }) => {
             drag={true}
             dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
             dragElastic={dragElastic}
+            onDrag={(e, { offset }) => {
+              setDragOffsetX(Math.abs(offset.x));
+            }}
             onDragEnd={(e, { offset, velocity }) => {
               const swipe = swipePower(offset.x, velocity.x);
               if (
@@ -81,10 +87,20 @@ export const CarouselStack: React.FC<CarouselStackProps> = ({ settings }) => {
               ) {
                 paginate();
               }
+              // 拖动结束后重置偏移量
+              setTimeout(() => setDragOffsetX(0), 100);
             }}
             onClick={() => {
-              if (items[index].url && items[index].url !== '#') {
-                window.open(items[index].url, '_blank');
+              // 只有拖动距离小于10px时才触发点击，避免拖动误触发
+              if (dragOffsetX > 10) return;
+              
+              const url = items[index].url;
+              if (url && url !== '#') {
+                if (url.startsWith('/')) {
+                  navigate(url);
+                } else {
+                  window.open(url, '_blank');
+                }
               }
             }}
             className={`card card-${i}`}

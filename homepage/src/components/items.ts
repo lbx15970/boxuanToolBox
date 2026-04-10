@@ -9,7 +9,7 @@ export const items = [
     title: "视频生成工具",
     description: "AI驱动的在线视频生成工具",
     image: gradientNew,
-    url: "https://github.com/lbx15970/video-generator",
+    url: "/tools/video-generator",
   },
   {
     id: 2,

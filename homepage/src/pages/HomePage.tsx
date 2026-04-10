@@ -1,8 +1,8 @@
 import { useState } from "react";
-import CarouselStack from "./components/CarouselStack";
-import { SettingsPanel, AnimationSettings } from "./components/SettingsPanel";
+import CarouselStack from "../components/CarouselStack";
+import { SettingsPanel, AnimationSettings } from "../components/SettingsPanel";
 
-export default function App() {
+export default function HomePage() {
   const [settings, setSettings] = useState<AnimationSettings>({
     springDuration: 0.3,
     springBounce: 0.3,
