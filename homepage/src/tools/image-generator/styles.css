@@ -8,6 +8,7 @@
   --ig-black-55: rgba(0, 0, 0, 0.33);
   --ig-font: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 
+  color-scheme: light;
   min-height: 100vh;
   width: 100%;
   background-color: var(--ig-blue);
