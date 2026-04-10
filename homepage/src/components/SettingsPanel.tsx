@@ -60,8 +60,13 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
       </Button>
 
       {isOpen && (
-        <div className="fixed top-0 right-0 h-full w-[320px] bg-white border-l border-border shadow-lg z-[60] overflow-y-auto">
-          <div className="flex items-start justify-end px-4 py-3 border-b border-border">
+        <>
+          <div 
+            className="fixed inset-0 z-[55] bg-black/5 backdrop-blur-[1px] transition-opacity cursor-pointer" 
+            onClick={() => setIsOpen(false)}
+          />
+          <div className="fixed top-0 right-0 h-full w-[320px] bg-white border-l border-border shadow-lg z-[60] overflow-y-auto">
+            <div className="flex items-start justify-end px-4 py-3 border-b border-border">
             <Button
               variant="ghost"
               size="icon"
@@ -257,6 +262,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
             </div>
           </div>
         </div>
+        </>
       )}
     </>
   );
