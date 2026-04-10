@@ -13,10 +13,10 @@ export const items = [
   },
   {
     id: 2,
-    title: "State 2",
-    description: "Smooth gradient transition",
+    title: "图像生成工具",
+    description: "基于Seedream模型的AI图像生成工具",
     image: gradientSmooth,
-    url: "#",
+    url: "/tools/image-generator",
   },
   {
     id: 3,

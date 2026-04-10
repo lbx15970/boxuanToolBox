@@ -1,0 +1,9 @@
+:root {
+  --cookie-monster-blue: #0062ad;
+  --cream-background: #fbf0dc;
+}
+
+/* 组件样式隔离，使用ig-前缀避免冲突 */
+.ig-* {
+  box-sizing: border-box;
+}
