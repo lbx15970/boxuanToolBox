@@ -1,7 +1,6 @@
 /* ===== Image Generator Tool — Scoped Styles ===== */
-/* 所有选择器包裹在 .ig-app 下，避免与主站样式冲突 */
 
-/* 锁定页面滚动（当图像生成工具激活时） */
+/* 锁定页面滚动 */
 body:has(.ig-app) {
   overflow: hidden !important;
   position: fixed !important;
@@ -12,7 +11,6 @@ body:has(.ig-app) {
   --ig-blue: #0062ad;
   --ig-cream: #fbf0dc;
   --ig-black: #000000;
-  --ig-black-55: rgba(0, 0, 0, 0.33);
   --ig-font: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 
   color-scheme: light;
@@ -23,13 +21,12 @@ body:has(.ig-app) {
   background-color: #0062ad !important;
   font-family: var(--ig-font);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 16px;
-  position: relative;
+  padding: 24px;
   box-sizing: border-box;
   overflow: hidden;
+  position: relative;
 }
 
 /* ===== Back Button ===== */
@@ -41,7 +38,7 @@ body:has(.ig-app) {
   align-items: center;
   gap: 6px;
   background: rgba(251, 240, 220, 0.15);
-  border: 1px solid rgba(251, 240, 220, 0.3);
+  border: 1px solid rgba(251, 240, 220, 0.35);
   color: #fbf0dc !important;
   font-family: var(--ig-font);
   font-size: 14px;
@@ -56,12 +53,12 @@ body:has(.ig-app) {
 }
 
 .ig-back-btn:hover {
-  background: rgba(251, 240, 220, 0.25);
+  background: rgba(251, 240, 220, 0.28);
   border-color: rgba(251, 240, 220, 0.6);
   transform: translateX(-2px);
 }
 
-/* ===== Scene / Card ===== */
+/* ===== Polaroid Card ===== */
 .ig-scene {
   display: flex;
   align-items: center;
@@ -69,25 +66,32 @@ body:has(.ig-app) {
   width: 100%;
 }
 
+/* 整张卡是奶油色，photo 区域有奶油边框内嵌蓝色 */
 .ig-card {
   background-color: #fbf0dc !important;
   width: 100%;
-  max-width: 458px;
-  border-radius: 4px;
-  overflow: hidden;
+  max-width: 440px;
   display: flex;
   flex-direction: column;
+  border-radius: 2px;
+  overflow: hidden;
 }
 
-/* ===== Monster Section ===== */
+/* 奶油色顶部内边距，包裹蓝色"照片"区，形成拍立得效果 */
+.ig-photo-frame {
+  background-color: #fbf0dc !important;
+  padding: 18px 18px 0 18px;
+}
+
+/* 蓝色"照片"区域 */
 .ig-monster {
   background-color: #0062ad !important;
-  height: 432px;
+  aspect-ratio: 1 / 0.85;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  flex-shrink: 0;
+  width: 100%;
 }
 
 .ig-eyes {
@@ -95,15 +99,15 @@ body:has(.ig-app) {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 8px;
 }
 
 /* ===== Eye ===== */
 .ig-eye {
   position: relative;
   flex-shrink: 0;
-  width: 204px;
-  height: 204px;
+  width: 160px;
+  height: 160px;
   border-radius: 50%;
   background-color: #fbf0dc !important;
   overflow: hidden;
@@ -113,8 +117,8 @@ body:has(.ig-app) {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 76px;
-  height: 76px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   background-color: #000000 !important;
 }
@@ -122,16 +126,16 @@ body:has(.ig-app) {
 /* ===== Legend / Input ===== */
 .ig-legend {
   background-color: #fbf0dc !important;
-  padding: 18px;
+  padding: 16px 18px 18px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .ig-title {
-  font-size: 64px;
+  font-size: 52px;
   font-weight: 700;
-  line-height: 68px;
+  line-height: 58px;
   color: #000000 !important;
   margin: 0;
   letter-spacing: -0.02em;
@@ -145,30 +149,31 @@ body:has(.ig-app) {
   outline: none;
   border: none;
   font-family: var(--ig-font);
-  font-weight: 500;
-  font-size: 24px;
+  font-weight: 400;
+  font-size: 20px;
   color: #000000 !important;
-  min-height: 80px;
+  min-height: 28px;
   line-height: 1.4;
   padding: 0;
   box-sizing: border-box;
 }
 
 .ig-prompt-input::placeholder {
-  color: rgba(0, 0, 0, 0.33) !important;
+  color: rgba(0, 0, 0, 0.35) !important;
+  -webkit-text-fill-color: rgba(0, 0, 0, 0.35);
 }
 
 .ig-footer-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 4px;
+  margin-top: 8px;
 }
 
 .ig-hint {
   font-family: var(--ig-font);
-  font-weight: 500;
-  font-size: 16px;
+  font-weight: 400;
+  font-size: 14px;
   color: #000000 !important;
   line-height: normal;
 }
@@ -182,9 +187,9 @@ body:has(.ig-app) {
   color: #fbf0dc !important;
   border: none;
   border-radius: 100px;
-  padding: 12px 22px;
+  padding: 10px 20px;
   font-family: var(--ig-font);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -202,32 +207,32 @@ body:has(.ig-app) {
 }
 
 .ig-generate-btn:disabled {
-  opacity: 0.45;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
 /* ===== Mobile ===== */
-@media (max-width: 500px) {
-  .ig-monster {
-    height: 320px;
+@media (max-width: 480px) {
+  .ig-app {
+    padding: 16px;
   }
 
   .ig-eye {
-    width: 140px;
-    height: 140px;
+    width: 120px;
+    height: 120px;
   }
 
   .ig-pupil {
-    width: 52px;
-    height: 52px;
+    width: 44px;
+    height: 44px;
   }
 
   .ig-title {
-    font-size: 44px;
-    line-height: 50px;
+    font-size: 40px;
+    line-height: 46px;
   }
 
   .ig-prompt-input {
-    font-size: 20px;
+    font-size: 18px;
   }
 }

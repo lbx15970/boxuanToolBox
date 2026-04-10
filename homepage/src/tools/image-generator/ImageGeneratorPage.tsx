@@ -114,11 +114,13 @@ export default function ImageGeneratorPage() {
       {/* Main card */}
       <div className="ig-scene">
         <div className="ig-card">
-          {/* Monster section */}
-          <div className="ig-monster">
-            <div className="ig-eyes">
-              <Eye isRightEye={false} />
-              <Eye isRightEye={true} />
+          {/* Photo frame: cream border around blue monster area */}
+          <div className="ig-photo-frame">
+            <div className="ig-monster">
+              <div className="ig-eyes">
+                <Eye isRightEye={false} />
+                <Eye isRightEye={true} />
+              </div>
             </div>
           </div>
 
@@ -130,7 +132,7 @@ export default function ImageGeneratorPage() {
               placeholder="在此输入图像描述..."
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
-              rows={3}
+              rows={2}
             />
             <div className="ig-footer-row">
               <span className="ig-hint">哈哈。</span>
