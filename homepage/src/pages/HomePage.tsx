@@ -16,7 +16,10 @@ export default function HomePage() {
   return (
     <div className="App" style={{ background: '#ffffff', minHeight: '100vh', width: '100vw' }}>
       <style>{`
-        html, body { background-color: #ffffff !important; }
+        :root, html, body, html.dark, html.dark body, .dark { 
+           background-color: #ffffff !important; 
+           color-scheme: light !important;
+        }
       `}</style>
       <div className="hero-container">
         <div className="container" style={{ position: 'relative' }}>

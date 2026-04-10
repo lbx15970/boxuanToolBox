@@ -122,18 +122,20 @@ export const CarouselStack: React.FC<CarouselStackProps> = ({ settings }) => {
         ))}
       </AnimatePresence>
       <motion.div 
-        animate={hasSwiped ? { opacity: 0 } : { opacity: [0.5, 1, 0.5] }}
-        transition={hasSwiped ? { duration: 0.6 } : { duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        animate={hasSwiped ? { opacity: 0, y: 10 } : { opacity: [0.4, 0.8, 0.4], y: 0 }}
+        transition={hasSwiped ? { duration: 0.4 } : { duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
         style={{
-          position: 'absolute',
-          bottom: '-60px',
-          width: '100%',
+          position: 'fixed',
+          bottom: '12vh',
+          left: 0,
+          right: 0,
           textAlign: 'center',
-          color: '#666666',
-          fontSize: '14px',
+          color: '#888888',
+          fontSize: '13px',
           pointerEvents: 'none',
-          letterSpacing: '3px',
-          fontWeight: 400
+          letterSpacing: '4px',
+          fontWeight: 400,
+          zIndex: 9999
         }}
       >
         &gt;&gt; 滑动以切换 &gt;&gt;
