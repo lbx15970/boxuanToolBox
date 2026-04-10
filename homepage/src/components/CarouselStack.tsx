@@ -4,10 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { items } from "./items";
 import { AnimationSettings } from "./SettingsPanel";
 
-const swipeConfidenceThreshold = 10000;
-const swipePower = (offset: number, velocity: number) => {
-  return Math.abs(offset) * velocity;
-};
+
 
 // Image variants aka first card
 const createCardVariants = (settings: AnimationSettings) => ({
