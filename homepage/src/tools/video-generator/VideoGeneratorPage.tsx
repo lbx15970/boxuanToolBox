@@ -100,12 +100,13 @@ function ResultCard({
   const statusMap: Record<string, { text: string; cls: string; dot: string }> = {
     pending: { text: '排队中', cls: 'vg-pending', dot: 'vg-pulse' },
     processing: { text: `生成中${task.progress ? ` ${task.progress}%` : ''}`, cls: 'vg-processing', dot: 'vg-pulse' },
+    running: { text: `生成中${task.progress ? ` ${task.progress}%` : ''}`, cls: 'vg-processing', dot: 'vg-pulse' },
     succeeded: { text: '已完成', cls: 'vg-succeeded', dot: '' },
     failed: { text: '失败', cls: 'vg-failed', dot: '' },
   };
 
   const s = statusMap[task.status] || statusMap.pending;
-  const isProcessing = task.status === 'processing';
+  const isProcessing = task.status === 'processing' || task.status === 'running';
   const hasProgress = isProcessing && task.progress > 0;
   const estimatedTimeSeconds = (task.duration || 5) * 15;
   const estimatedTimeText = estimatedTimeSeconds > 60
@@ -131,7 +132,7 @@ function ResultCard({
         <div>参数: {task.resolution || '720p'} | {task.ratio || '16:9'} | {task.duration || 5} 秒</div>
       </div>
       <div className="vg-result-card-body">
-        {(task.status === 'pending' || task.status === 'processing') && (
+        {(task.status === 'pending' || task.status === 'processing' || task.status === 'running') && (
           <div className="vg-result-loading">
             <div className="vg-loading-spinner" />
             <span>{isProcessing ? '视频生成中' : '排队等待中'}{hasProgress ? ` · ${task.progress}%` : '...'}</span>
