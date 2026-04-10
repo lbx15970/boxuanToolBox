@@ -315,7 +315,14 @@ export default function VideoGeneratorPage() {
 
       {/* 顶部导航 */}
       <header className="vg-header">
-        <div className="vg-header-left">
+        <div className="vg-header-left" style={{ display: 'flex', alignItems: 'center' }}>
+          <button onClick={() => navigate('/')} style={{ marginRight: '16px', background: 'none', border: 'none', color: 'var(--vg-text)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', padding: '4px 8px', borderRadius: '6px', fontSize: '14px' }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="19" y1="12" x2="5" y2="12" />
+              <polyline points="12 19 5 12 12 5" />
+            </svg>
+            返回主页
+          </button>
           <a className="vg-logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <polygon points="23 7 16 12 23 17 23 7" />
