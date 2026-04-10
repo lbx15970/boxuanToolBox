@@ -87,11 +87,23 @@ function Eye({ isRightEye = false, isGenerating = false }: EyeProps) {
 
 // ===== API 调用 =====
 async function callGenerateAPI(prompt: string): Promise<{ imageDataUrl?: string; imageUrl?: string }> {
-  const res = await fetch('/api/tools/image-generator/generate', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ prompt }),
-  });
+  let res: Response;
+  try {
+    res = await fetch('/api/tools/image-generator/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt }),
+    });
+  } catch (e: any) {
+    throw new Error('网络请求失败，请检查网络连接');
+  }
+
+  const contentType = res.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    // 服务器返回了 HTML（可能是 Vercel 404 或未部署的后端）
+    throw new Error(`API 未就绪（HTTP ${res.status}）— 请确认 Vercel 已成功部署后端`);
+  }
+
   const data = await res.json();
   if (!res.ok || !data.success) throw new Error(data.error || '生成失败');
   return data;

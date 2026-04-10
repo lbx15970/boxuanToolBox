@@ -36,7 +36,8 @@ body:has(.ig-app) {
   touch-action: none;
 }
 
-.ig-prompt-input {
+.ig-prompt-input,
+.ig-error-msg {
   -webkit-user-select: text;
   user-select: text;
   touch-action: auto;
