@@ -16,6 +16,9 @@ app.use(express.json({ limit: '100mb' }));
 const videoGeneratorRoutes = require('./routes/video-generator');
 app.use('/api/tools/video-generator', videoGeneratorRoutes);
 
+const imageGeneratorRoutes = require('./routes/image-generator');
+app.use('/api/tools/image-generator', imageGeneratorRoutes);
+
 // ===== 健康检查 =====
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
