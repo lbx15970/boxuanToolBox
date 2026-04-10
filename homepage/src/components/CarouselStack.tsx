@@ -4,6 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { items } from "./items";
 import { AnimationSettings } from "./SettingsPanel";
 
+const swipeConfidenceThreshold = 10000;
+const swipePower = (offset: number, velocity: number) => {
+  return Math.abs(offset) * velocity;
+};
+
 // Image variants aka first card
 const createCardVariants = (settings: AnimationSettings) => ({
   visible: (i: number) => ({
@@ -41,9 +46,10 @@ interface CarouselStackProps {
 
 export const CarouselStack: React.FC<CarouselStackProps> = ({ settings }) => {
   const [[page, direction], setPage] = useState([0, 0]);
-  const [indices, setIndices] = useState([0, 1, 2, 3]);
-  const [dragElastic, setDragElastic] = useState(0.7); // Default to desktop
+  const [indices, setIndices] = useState(() => items.map((_, i) => i));
   const [dragOffsetX, setDragOffsetX] = useState(0);
+  const [hasSwiped, setHasSwiped] = useState(false);
+  const [dragElastic, setDragElastic] = useState(settings.dragElastic);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -80,6 +86,7 @@ export const CarouselStack: React.FC<CarouselStackProps> = ({ settings }) => {
               setDragOffsetX(Math.abs(offset.x));
             }}
             onDragEnd={(e, { offset, velocity }) => {
+              setHasSwiped(true);
               const swipe = swipePower(offset.x, velocity.x);
               if (
                 swipe < -settings.swipeConfidenceThreshold ||
@@ -114,6 +121,23 @@ export const CarouselStack: React.FC<CarouselStackProps> = ({ settings }) => {
           </motion.div>
         ))}
       </AnimatePresence>
+      <div 
+        style={{
+          position: 'absolute',
+          bottom: '-40px',
+          width: '100%',
+          textAlign: 'center',
+          color: '#9898b0',
+          fontSize: '13px',
+          opacity: hasSwiped ? 0 : 1,
+          transition: 'opacity 0.6s ease-in-out',
+          pointerEvents: 'none',
+          letterSpacing: '2px',
+          fontWeight: 300
+        }}
+      >
+        &gt;&gt; 滑动以切换 &gt;&gt;
+      </div>
     </div>
   );
 };
