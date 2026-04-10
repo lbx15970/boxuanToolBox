@@ -135,11 +135,13 @@ function AdvancedPanel({
         <div className="ig-param-row ig-param-switch">
           <label className="ig-param-label">
             联网搜索
-            <span className="ig-param-desc">增强对实时内容的理解</span>
+            <span className="ig-param-desc">图像生成接口暂不支持此功能</span>
           </label>
           <button
-            className={`ig-switch${params.webSearch ? ' on' : ''}`}
-            onClick={() => onChange({ webSearch: !params.webSearch })}
+            className="ig-switch"
+            disabled
+            title="图像生成 API 不支持联网搜索"
+            style={{ opacity: 0.35, cursor: 'not-allowed' }}
           >
             <span className="ig-switch-thumb" />
           </button>

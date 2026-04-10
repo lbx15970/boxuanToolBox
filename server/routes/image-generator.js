@@ -18,17 +18,13 @@ function arkImageGenerate(params) {
       response_format: 'b64_json',               // 直接返回 base64 避免 URL 过期
     };
 
-    // 联网搜索（与图片生成配合，增强 prompt 理解）
-    if (params.webSearch) {
-      payload.extra_body = {
-        web_search: { enable: true }
-      };
-    }
-
     // 不添加水印
     if (params.noWatermark) {
       payload.watermark = false;
     }
+
+    // 注意：联网搜索（web_search）仅适用于 Chat Completions 接口，
+    // 图像生成接口（/api/v3/images/generations）不支持此参数，已移除。
 
     // 图片比例（通过调整 size 实现）
     // size 统一在前端根据分辨率 + 比例计算好后传入
