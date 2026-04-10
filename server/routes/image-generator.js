@@ -13,21 +13,31 @@ function arkImageGenerate(params) {
     const payload = {
       model: IG_ENDPOINT_ID,
       prompt: params.prompt,
-      n: params.n || 1,                          // 生成张数 1-9
-      size: params.size || '2048x2048',           // 分辨率
-      response_format: 'b64_json',               // 直接返回 base64 避免 URL 过期
+      n: params.n || 1,
+      size: params.size || '2048x2048',
+      response_format: 'b64_json',
     };
 
-    // 不添加水印
+    // 不加水印
     if (params.noWatermark) {
       payload.watermark = false;
     }
 
-    // 注意：联网搜索（web_search）仅适用于 Chat Completions 接口，
-    // 图像生成接口（/api/v3/images/generations）不支持此参数，已移除。
-
-    // 图片比例（通过调整 size 实现）
-    // size 统一在前端根据分辨率 + 比例计算好后传入
+    // 参考图：通过 messages 格式传入（Seedream 图生图规范）
+    // 每张参考图作为 image_url content item 附加到 prompt 后
+    if (params.referenceImages && params.referenceImages.length > 0) {
+      // 构造 content 数组：先文字 prompt，再依次附图
+      const contentItems = [
+        { type: 'text', text: params.prompt },
+        ...params.referenceImages.map(img => ({
+          type: 'image_url',
+          image_url: { url: img }, // img 已是 base64 data URL
+        })),
+      ];
+      // messages 格式覆盖纯 prompt
+      payload.messages = [{ role: 'user', content: contentItems }];
+      delete payload.prompt; // 已在 messages 中包含
+    }
 
     const body = JSON.stringify(payload);
     const options = {
@@ -42,7 +52,7 @@ function arkImageGenerate(params) {
       },
     };
 
-    console.log(`[IG] 生成图像 n=${payload.n} size=${payload.size} webSearch=${!!params.webSearch}`);
+    console.log(`[IG] n=${payload.n} size=${payload.size} refs=${params.referenceImages?.length || 0}`);
 
     const req = https.request(options, (res) => {
       let data = '';

@@ -371,11 +371,21 @@ body:has(.ig-app) {
 
 .ig-panel-close:hover { background: rgba(0,0,0,0.08); }
 
+.ig-param-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+}
+
+/* 保留 ig-param-row 供 switch 场景（label+switch 水平排列） */
 .ig-param-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  width: 100%;
 }
 
 .ig-param-col {
@@ -407,7 +417,7 @@ body:has(.ig-app) {
   display: flex;
   gap: 4px;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 .ig-n-btn {
@@ -457,8 +467,8 @@ body:has(.ig-app) {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  justify-content: flex-end;
-  max-width: 240px;
+  justify-content: flex-start;
+  width: 100%;
 }
 
 .ig-ratio-btn {
@@ -561,31 +571,23 @@ body:has(.ig-app) {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
-.ig-gallery-dots {
+/* X/Y 右下角计数器 */
+.ig-gallery-counter {
   position: absolute;
   bottom: 10px;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  gap: 6px;
-}
-
-.ig-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.5);
-  border: none;
-  cursor: pointer;
-  transition: all 0.15s;
-  padding: 0;
-}
-
-.ig-dot.active {
-  background: #fff !important;
-  transform: scale(1.2);
+  right: 10px;
+  background: rgba(0, 0, 0, 0.45);
+  color: #ffffff !important;
+  font-family: var(--ig-font);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 100px;
+  pointer-events: none;
+  letter-spacing: 0.02em;
 }
 
 /* ===== Mobile ===== */

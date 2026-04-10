@@ -96,7 +96,7 @@ function AdvancedPanel({
         </div>
 
         {/* 生成张数 */}
-        <div className="ig-param-row">
+        <div className="ig-param-section">
           <label className="ig-param-label">生成张数</label>
           <div className="ig-n-picker">
             {[1,2,3,4,5,6,7,8,9].map(n => (
@@ -108,7 +108,7 @@ function AdvancedPanel({
         </div>
 
         {/* 分辨率 */}
-        <div className="ig-param-row">
+        <div className="ig-param-section">
           <label className="ig-param-label">分辨率</label>
           <div className="ig-toggle-group">
             {(['2k', '4k'] as Resolution[]).map(r => (
@@ -120,7 +120,7 @@ function AdvancedPanel({
         </div>
 
         {/* 图片比例 */}
-        <div className="ig-param-row">
+        <div className="ig-param-section">
           <label className="ig-param-label">图片比例</label>
           <div className="ig-ratio-grid">
             {ratios.map(r => (
@@ -131,8 +131,8 @@ function AdvancedPanel({
           </div>
         </div>
 
-        {/* 联网搜索 */}
-        <div className="ig-param-row ig-param-switch">
+        {/* 联网搜索（暂不支持） */}
+        <div className="ig-param-section">
           <label className="ig-param-label">
             联网搜索
             <span className="ig-param-desc">图像生成接口暂不支持此功能</span>
@@ -140,7 +140,6 @@ function AdvancedPanel({
           <button
             className="ig-switch"
             disabled
-            title="图像生成 API 不支持联网搜索"
             style={{ opacity: 0.35, cursor: 'not-allowed' }}
           >
             <span className="ig-switch-thumb" />
@@ -148,7 +147,7 @@ function AdvancedPanel({
         </div>
 
         {/* 参考图 */}
-        <div className="ig-param-row ig-param-col">
+        <div className="ig-param-section">
           <label className="ig-param-label">
             参考图（可选）
             <span className="ig-param-desc">上传 1 张或多张参考图进行图生图</span>
@@ -171,23 +170,55 @@ function AdvancedPanel({
   );
 }
 
-// ===== Image Result Gallery =====
-function ImageGallery({ images, onRegen }: { images: string[]; onRegen: () => void }) {
+// ===== Image Result Gallery (swipe + X/Y counter) =====
+function ImageGallery({ images }: { images: string[] }) {
   const [current, setCurrent] = useState(0);
+  const touchStartX = useRef<number | null>(null);
+  const [dragOffset, setDragOffset] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const goTo = useCallback((idx: number) => {
+    setCurrent(Math.max(0, Math.min(images.length - 1, idx)));
+  }, [images.length]);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    setIsDragging(true);
+    setDragOffset(0);
+  };
+  const onTouchMove = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    setDragOffset(e.touches[0].clientX - touchStartX.current);
+  };
+  const onTouchEnd = () => {
+    if (Math.abs(dragOffset) > 40) {
+      goTo(current + (dragOffset < 0 ? 1 : -1));
+    }
+    setDragOffset(0);
+    setIsDragging(false);
+    touchStartX.current = null;
+  };
+
   return (
-    <div className="ig-gallery">
+    <div
+      className="ig-gallery"
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+    >
       <img
         src={images[current]}
-        alt="生成图"
+        alt={`生成图 ${current + 1}`}
         className="ig-result-image"
-        style={{ '-webkit-touch-callout': 'default' } as any}
+        style={{
+          transform: `translateX(${dragOffset}px)`,
+          transition: isDragging ? 'none' : 'transform 0.25s ease',
+          '-webkit-touch-callout': 'default',
+        } as any}
       />
+      {/* X/Y 右下角计数器 */}
       {images.length > 1 && (
-        <div className="ig-gallery-dots">
-          {images.map((_, i) => (
-            <button key={i} className={`ig-dot${i === current ? ' active' : ''}`} onClick={() => setCurrent(i)} />
-          ))}
-        </div>
+        <div className="ig-gallery-counter">{current + 1}/{images.length}</div>
       )}
     </div>
   );
@@ -205,7 +236,6 @@ async function callGenerateAPI(prompt: string, params: AdvancedParams): Promise<
         n: params.n,
         resolution: params.resolution,
         aspectRatio: params.aspectRatio,
-        webSearch: params.webSearch,
         noWatermark: params.noWatermark,
         referenceImages: params.referenceImages,
       }),
