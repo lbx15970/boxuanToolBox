@@ -123,23 +123,30 @@ router.post('/generate', async (req, res) => {
   }
 
   try {
-    const result = await arkImageGenerate({
-      prompt: prompt.trim(),
-      n: count,
-      size,
-      webSearch,
-      noWatermark,
-    });
+    // Seedream endpoint 不支持 n>1，改为并发发 count 次独立请求
+    const requests = Array.from({ length: count }, () =>
+      arkImageGenerate({
+        prompt: prompt.trim(),
+        n: 1,           // 每次只请求 1 张
+        size,
+        noWatermark,
+        referenceImages,
+      })
+    );
 
-    const images = (result?.data || []).map((item, idx) => ({
-      index: idx,
-      dataUrl: item.b64_json
-        ? `data:image/png;base64,${item.b64_json}`
-        : item.url || null,
-    })).filter(i => i.dataUrl);
+    const results = await Promise.all(requests);
+
+    const images = results.flatMap(result =>
+      (result?.data || []).map((item, idx) => ({
+        index: idx,
+        dataUrl: item.b64_json
+          ? `data:image/png;base64,${item.b64_json}`
+          : item.url || null,
+      }))
+    ).filter(i => i.dataUrl);
 
     if (images.length === 0) {
-      return res.status(500).json({ error: '未返回有效图像数据', raw: result });
+      return res.status(500).json({ error: '未返回有效图像数据' });
     }
 
     return res.json({ success: true, images });
