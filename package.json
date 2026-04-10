@@ -1,0 +1,9 @@
+{
+  "name": "boxuan-toolbox-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "install": "cd server && npm install && cd ../homepage && npm install",
+    "build": "cd homepage && npm run build"
+  }
+}
