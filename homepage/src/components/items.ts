@@ -14,7 +14,7 @@ export const items = [
   {
     id: 2,
     title: "图像生成工具",
-    description: "基于Seedream模型的AI图像生成工具",
+    description: "AI驱动的在线图像生成工具",
     image: gradientSmooth,
     url: "/tools/image-generator",
   },

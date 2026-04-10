@@ -22,7 +22,7 @@ export default function App() {
         <Route
           path="/tools/image-generator"
           element={
-            <Suspense fallback={<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', background: '#0062ad', color: '#ffffff' }}>加载中...</div>}>
+            <Suspense fallback={<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', background: '#0062ad', color: '#fbf0dc' }}>加载中...</div>}>
               <ImageGeneratorPage />
             </Suspense>
           }

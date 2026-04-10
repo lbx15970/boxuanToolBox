@@ -1,9 +1,221 @@
-:root {
-  --cookie-monster-blue: #0062ad;
-  --cream-background: #fbf0dc;
+/* ===== Image Generator Tool — Scoped Styles ===== */
+/* 所有选择器包裹在 .ig-app 下，避免与主站样式冲突 */
+
+.ig-app {
+  --ig-blue: #0062ad;
+  --ig-cream: #fbf0dc;
+  --ig-black: #000000;
+  --ig-black-55: rgba(0, 0, 0, 0.33);
+  --ig-font: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--ig-blue);
+  font-family: var(--ig-font);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  position: relative;
+  box-sizing: border-box;
 }
 
-/* 组件样式隔离，使用ig-前缀避免冲突 */
-.ig-* {
+/* ===== Back Button ===== */
+.ig-back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(251, 240, 220, 0.15);
+  border: 1px solid rgba(251, 240, 220, 0.3);
+  color: var(--ig-cream);
+  font-family: var(--ig-font);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 14px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.ig-back-btn:hover {
+  background: rgba(251, 240, 220, 0.25);
+  border-color: rgba(251, 240, 220, 0.6);
+  transform: translateX(-2px);
+}
+
+/* ===== Scene / Card ===== */
+.ig-scene {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.ig-card {
+  background-color: var(--ig-cream);
+  width: 100%;
+  max-width: 458px;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== Monster Section ===== */
+.ig-monster {
+  background-color: var(--ig-blue);
+  height: 432px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.ig-eyes {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+/* ===== Eye ===== */
+.ig-eye {
+  position: relative;
+  flex-shrink: 0;
+  width: 204px;
+  height: 204px;
+  border-radius: 50%;
+  background-color: var(--ig-cream);
+  overflow: hidden;
+}
+
+.ig-pupil {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background-color: var(--ig-black);
+}
+
+/* ===== Legend / Input ===== */
+.ig-legend {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ig-title {
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 68px;
+  color: var(--ig-black);
+  margin: 0;
+  letter-spacing: -0.02em;
+  font-family: var(--ig-font);
+}
+
+.ig-prompt-input {
+  width: 100%;
+  resize: none;
+  background: transparent;
+  outline: none;
+  border: none;
+  font-family: var(--ig-font);
+  font-weight: 500;
+  font-size: 24px;
+  color: var(--ig-black);
+  min-height: 80px;
+  line-height: 1.4;
+  padding: 0;
   box-sizing: border-box;
+}
+
+.ig-prompt-input::placeholder {
+  color: var(--ig-black-55);
+}
+
+.ig-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.ig-hint {
+  font-family: var(--ig-font);
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--ig-black);
+  line-height: normal;
+}
+
+/* ===== Generate Button ===== */
+.ig-generate-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--ig-blue);
+  color: var(--ig-cream);
+  border: none;
+  border-radius: 100px;
+  padding: 12px 22px;
+  font-family: var(--ig-font);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.ig-generate-btn:hover:not(:disabled) {
+  background-color: #004d8a;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 98, 173, 0.4);
+}
+
+.ig-generate-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.ig-generate-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 500px) {
+  .ig-monster {
+    height: 320px;
+  }
+
+  .ig-eye {
+    width: 140px;
+    height: 140px;
+  }
+
+  .ig-pupil {
+    width: 52px;
+    height: 52px;
+  }
+
+  .ig-title {
+    font-size: 44px;
+    line-height: 50px;
+  }
+
+  .ig-prompt-input {
+    font-size: 20px;
+  }
 }
