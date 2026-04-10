@@ -15,8 +15,11 @@ export default function HomePage() {
 
   return (
     <div className="App" style={{ background: '#ffffff', minHeight: '100vh', width: '100vw' }}>
+      <style>{`
+        html, body { background-color: #ffffff !important; }
+      `}</style>
       <div className="hero-container">
-        <div className="container">
+        <div className="container" style={{ position: 'relative' }}>
           <CarouselStack settings={settings} />
         </div>
       </div>
