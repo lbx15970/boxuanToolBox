@@ -7,3 +7,11 @@
 @layer base {
   html, body, #root { min-height: 100vh; height: 100%; margin: 0; }
 }
+
+/* ===== 强制首页为纯白背景，屏蔽深色模式对 body 的影响 ===== */
+html:not(.vg-page),
+body:not(.vg-page),
+#root:not(.vg-page) {
+  background-color: #ffffff !important;
+  color-scheme: light !important;
+}
